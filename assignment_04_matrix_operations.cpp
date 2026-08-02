@@ -65,3 +65,181 @@
 #include <string>
 using namespace std;
 
+
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+// Function to display a matrix
+void displayMatrix(int matrix[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << setw(5) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+// Function to transpose a matrix
+void transposeMatrix(int matrix[10][10], int transpose[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            transpose[j][i] = matrix[i][j];
+        }
+    }
+}
+
+// Function to add two matrices
+void addMatrices(int A[10][10], int B[10][10], int sum[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            sum[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+// Function to multiply two matrices
+void multiplyMatrices(int A[10][10], int B[10][10], int product[10][10],
+                      int rowsA, int colsA, int colsB)
+{
+    for (int i = 0; i < rowsA; i++)
+    {
+        for (int j = 0; j < colsB; j++)
+        {
+            product[i][j] = 0;
+
+            for (int k = 0; k < colsA; k++)
+            {
+                product[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+int main()
+{
+    int A[10][10], B[10][10], result[10][10], transpose[10][10];
+    int rows, cols;
+    int rowsA, colsA, rowsB, colsB;
+
+    // ==========================
+    // PART A: Transpose
+    // ==========================
+    cout << "PART A: Matrix Transpose" << endl;
+    cout << "Enter number of rows: ";
+    cin >> rows;
+    cout << "Enter number of columns: ";
+    cin >> cols;
+
+    cout << "Enter the matrix elements:" << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> A[i][j];
+        }
+    }
+
+    transposeMatrix(A, transpose, rows, cols);
+
+    cout << "\nOriginal Matrix:" << endl;
+    displayMatrix(A, rows, cols);
+
+    cout << "\nTransposed Matrix:" << endl;
+    displayMatrix(transpose, cols, rows);
+
+    // ==========================
+    // PART B: Matrix Addition
+    // ==========================
+    cout << "\nPART B: Matrix Addition" << endl;
+    cout << "Enter number of rows: ";
+    cin >> rows;
+    cout << "Enter number of columns: ";
+    cin >> cols;
+
+    cout << "Enter Matrix A:" << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> A[i][j];
+        }
+    }
+
+    cout << "Enter Matrix B:" << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> B[i][j];
+        }
+    }
+
+    addMatrices(A, B, result, rows, cols);
+
+    cout << "\nSum Matrix:" << endl;
+    displayMatrix(result, rows, cols);
+
+    // ==========================
+    // PART C: Matrix Multiplication
+    // ==========================
+    cout << "\nPART C: Matrix Multiplication" << endl;
+
+    cout << "Enter rows of Matrix A: ";
+    cin >> rowsA;
+    cout << "Enter columns of Matrix A: ";
+    cin >> colsA;
+
+    cout << "Enter Matrix A:" << endl;
+    for (int i = 0; i < rowsA; i++)
+    {
+        for (int j = 0; j < colsA; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> A[i][j];
+        }
+    }
+
+    cout << "Enter rows of Matrix B: ";
+    cin >> rowsB;
+    cout << "Enter columns of Matrix B: ";
+    cin >> colsB;
+
+    if (colsA != rowsB)
+    {
+        cout << "Matrix multiplication is not possible." << endl;
+        return 0;
+    }
+
+    cout << "Enter Matrix B:" << endl;
+    for (int i = 0; i < rowsB; i++)
+    {
+        for (int j = 0; j < colsB; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> B[i][j];
+        }
+    }
+
+    multiplyMatrices(A, B, result, rowsA, colsA, colsB);
+
+    cout << "\nProduct Matrix:" << endl;
+    displayMatrix(result, rowsA, colsB);
+
+    return 0;
+}
+
